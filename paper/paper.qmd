@@ -1,13 +1,10 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
-author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+title: "Graphing"
+author: Hadi Ahmad
+thanks: "Code and data are available at: https://github.com/hadi-u/lecture-starter"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper illustrates various types of graphs and themes using ``ggplot2``."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -29,11 +26,11 @@ You can and should cross-reference sections and sub-sections. We use @citeR and 
 
 The remainder of this paper is structured as follows. @sec-data....
 
-
-
 # Data {#sec-data}
 
 We are interested in the height of Lake Huron (@fig-huronheight).
+
+### Activity 2
 
 ```{r}
 #| label: fig-huronheight
@@ -49,53 +46,38 @@ tibble(year = 1875:1972,
   theme_minimal()
 ```
 
-
-We are interested in the height of Black Cherry Trees (@fig-treeheight).
-
+### Activity 3
 ```{r}
-#| label: fig-treeheight
-#| fig-cap: Height, in feet, of 31 Black Cherry Trees
+#| label: fig-huronheight-bar
+#| fig-cap: Annual measurements of the level, in feet, of Lake Huron 1875–1972.
 #| echo: false
 
 datasets::trees |> 
   as_tibble() |> 
   ggplot(aes(x = Height)) +
-  geom_bar() +
-  labs(x = "Height of cherry tree (feet)",
-       y = "Number of trees") +
-  theme_minimal()
-```
+  geom_bar()
 
-
-```{r}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 99,
-             alpha = 0.8) +
-  scale_color_manual(values = c("darkorange", "darkorange", "darkorange")) +
-  labs(
-    title = "Penguin size, Palmer Station LTER",
-    subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
-    x = "Flipper length (mm)",
-    y = "Body mass (g)",
-    color = "Penguin species",
-    shape = "Penguin species"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = c(0.2, 0.7),
-    plot.title.position = "plot",
-    plot.caption = element_text(hjust = 0, face = "italic"),
-    plot.caption.position = "plot"
-  )
 
 ```
 
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+
+### Activity 4
+
+```{r}
+#| label: fig-weight
+#| fig-cap: Weight of chicks after birth
+#| echo: false
+
+datasets::ChickWeight |> 
+  as_tibble() |> 
+  ggplot(aes(x = Time, y = weight, group = Chick)) +
+  geom_line() +
+  theme_classic()
+
+```
+
 
 ```{r}
 #| label: fig-bills
@@ -109,6 +91,13 @@ ggplot(penguins, aes(x = island, fill = species)) +
   theme_minimal() +
   facet_wrap(~species, ncol = 1) +
   coord_flip()
+
+tibble(year = 1700:1988,
+       sunspots = as.numeric(datasets::sunspot.year) |> round(0)) |>
+  ggplot(aes(x = sunspots)) +
+  geom_histogram() +
+  theme_classic()
+
 ```
 
 Talk more about it.
@@ -134,6 +123,46 @@ analysis_data |>
 
 Talk way more about it. 
 
+### Activity 6
+
+```{r}
+#| label: fig-planes2
+#| fig-cap: Relationship between wing length and width
+#| echo: false
+#| warning: false
+#| message: false
+#| 
+ggplot(data = penguins,
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species),
+             size = 3,
+             alpha = 0.8) +
+  scale_color_manual(values = c("darkgray", "darkgray", "darkgray")) +
+  labs(
+    title = "According to all known laws of aviation, there is no way a penguin should be able to fly. Its wings are too small to get its fat little body off the ground. The penguin, of course, flies anyway because penguins don't care what humans think",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Penguin species",
+    shape = "Penguin species"
+  ) +
+  theme_dark() +
+  theme(
+    legend.position = c(0.5, 0.7),
+    plot.title.position = "plot",
+    plot.caption = element_text(hjust = 100, face = "bold"),
+    plot.caption.position = "plot"
+  )
+
+```
+```{r}
+
+datasets::morley |> 
+  tibble()
+
+
+```
 
 
 # Model
