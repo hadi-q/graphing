@@ -50,6 +50,23 @@ tibble(year = 1875:1972,
 ```
 
 
+We are interested in the height of Black Cherry Trees (@fig-treeheight).
+
+```{r}
+#| label: fig-treeheight
+#| fig-cap: Height, in feet, of 31 Black Cherry Trees
+#| echo: false
+
+datasets::trees |> 
+  as_tibble() |> 
+  ggplot(aes(x = Height)) +
+  geom_bar() +
+  labs(x = "Height of cherry tree (feet)",
+       y = "Number of trees") +
+  theme_minimal()
+```
+
+
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```{r}
